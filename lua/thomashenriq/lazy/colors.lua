@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-	color = color or "rose-pine-moon"
+	color = color or "solarized-osaka"
 	vim.cmd.colorscheme(color)
 
 	vim.api.nvim_set_hl(0, "Normal", { bg = "#1e1e1e" })
@@ -86,6 +86,39 @@ return {
             ColorMyPencils();
         end
     },
+    {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = true,         -- fundo transparente pra casar com teu terminal
+      terminal_colors = true,     -- cores no :terminal
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = true },
+        functions = {},
+        variables = {},
+        sidebars = "dark",        -- qf/help e afins
+        floats = "dark",          -- janelas flutuantes
+      },
+      sidebars = { "qf", "help", "neo-tree" }, -- mantém barras laterais consistentes
+    },
+    config = function(_, opts)
+      require("solarized-osaka").setup(opts)
+      -- Se teu “Osaka Jade” no SO/terminal for escuro, mantém background 'dark'
+      vim.o.background = "dark"
+      -- Aplica o colorscheme
+      vim.cmd.colorscheme("solarized-osaka")
+      -- Ajustes finos de transparência/popup sem “caixa preta”
+      local function clear(group) pcall(vim.api.nvim_set_hl, 0, group, { bg = "none" }) end
+      for _, g in ipairs({
+        "Normal", "NormalNC", "NormalFloat", "SignColumn",
+        "StatusLineNC", "CursorLine", "CursorLineNr",
+        "LineNr", "FoldColumn", "WinSeparator",
+        "TelescopeNormal", "TelescopeBorder", "FloatBorder",
+      }) do clear(g) end
+    end
+  },
 
 
 }
