@@ -33,7 +33,7 @@ return {
     },
     config = function(_, opts)
       require("neo-tree").setup(opts)
-
+      close_if_last_window = true
       -- Atalhos globais para abrir Neo-tree
       vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Neo-tree Toggle" })
       vim.keymap.set("n", "<leader>o", "<cmd>Neotree focus<cr>",  { desc = "Neo-tree Focus" })
